@@ -7,9 +7,9 @@ module.exports = {
     hardhat: {
       chainId: 1337
     },
-    mumbai: {
-      url: "",
-      accounts: [process.env.pk]
-    }
+    // mumbai: {
+      // url: "",
+      // accounts: [process.env.pk]
+    // }
   }
 };
