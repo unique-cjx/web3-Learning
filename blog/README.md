@@ -80,7 +80,7 @@ npx hardhat node
 
 **Importing the test account into your wallet**
 
-一共有20个测试账号，每个账号持有**10,000**个fake eth，选中(**Account#0**)的账号私钥导入到你的小狐狸钱包，这是`contract`的部署的默认账号也是`contract`的所属者
+一共有20个测试账号，每个账号持有**10,000**个fake eth，选中(**Account#0**)的账号私钥导入到你的小狐狸钱包，这是`contract`的部署账号同时也是`contract`的**owner**
 
 ## 0x05Next.jsApp
 
@@ -111,9 +111,7 @@ npm run dev
 
 We'll start by deploying to **Mumbai**, the Polygon test network
 
-<aside>
-💡 千万不要将你的私钥推送到你的源代码仓库中
-</aside>
+>💡 千万不要将你的私钥推送到你的源代码仓库中
 
 **export your private key**
 
@@ -148,6 +146,4 @@ npm run dev
 ```
 
 ## 0x07 **Creating a subgraph API**
-<aside>
-💡 To be continued
-</aside>
+>💡 To be continued

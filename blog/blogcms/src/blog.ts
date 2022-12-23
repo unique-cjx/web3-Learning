@@ -2,17 +2,14 @@ import {
   PostCreated as PostCreatedEvent,
   PostUpdated as PostUpdatedEvent
 } from "../generated/Blog/Blog"
-import {
-  Post
-} from "../generated/schema"
+import {Post} from "../generated/schema"
 import { ipfs, json, log } from '@graphprotocol/graph-ts'
 
 export function handlePostCreated(event: PostCreatedEvent): void {
-  let post = new Post(event.params.id.toString());
-  post.title = event.params.title;
-  post.contentHash = event.params.hash;
-  log.debug("hash={}", [post.contentHash])
-  let data = ipfs.cat("https://ipfs.io/ipfs/QmbLssRZFBC33SyrATPb9jaqJBK3W1UJY42qtaT4b1K399");
+  let post = new Post(event.params.id.toString())
+  post.title = event.params.title
+  post.contentHash = event.params.hash
+  let data = ipfs.cat(post.contentHash)
   if (data) {
     let value = json.fromBytes(data).toObject()
     if (value) {
@@ -27,12 +24,12 @@ export function handlePostCreated(event: PostCreatedEvent): void {
 }
 
 export function handlePostUpdated(event: PostUpdatedEvent): void {
-  let post = Post.load(event.params.id.toString());
+  let post = Post.load(event.params.id.toString())
   if (post) {
-    post.title = event.params.title;
-    post.contentHash = event.params.hash;
-    post.published = event.params.published;
-    let data = ipfs.cat(event.params.hash);
+    post.title = event.params.title
+    post.contentHash = event.params.hash
+    post.published = event.params.published
+    let data = ipfs.cat(event.params.hash)
     if (data) {
       let value = json.fromBytes(data).toObject()
       if (value) {
