@@ -2,10 +2,9 @@
 
 ## What makes Web 3.0 different?
 
-![architecture](./assets/web3-arch.png)
-
 不需要集中式的服务器，也没有集中式的数据库，在匿名节点维护的分布式**状态机**上构建应用程序。
 
+<img src="./assets/web3-arch.png" width="420" height="480" alt="web3-arch">
 
 ## ‍A Closer Look
 
@@ -46,7 +45,7 @@ ETH就是个超级计算机，一个可全局访问的状态机，对等节点�
 
 **Metamask**将用户的私钥存储在浏览器，每当前端需要用户签名就会唤起**Metamask**
 
-![metamask](./assets/web3-meta.png)
+<img src="./assets/web3-meta.png" width="420" height="480" alt="web3-meta">
 
 ## ****Storage on the Blockchain****
 
@@ -65,7 +64,8 @@ One way to combat this is to use a decentralized off-chain storage solution, lik
 
 我们也可以将**Frontend code** 由**IPFS** or **Swarm**上托管
 
-![ipfs](./assets/web3-ipfs.png)
+<img src="./assets/web3-ipfs.png" width="420" height="480" alt="web3-ipfs">
+
 
 ## ****‍Querying the Blockchain****
 
@@ -86,7 +86,8 @@ One way to combat this is to use a decentralized off-chain storage solution, lik
 
 **Polygon**是一种`sidechain`，每隔一段时间`sidechain`会聚合最近的区块并同步到`primary chain`。
 
-![sidechain](./assets/web3-sidechain.png)
+<img src="./assets/web3-sidechain.png" width="400" height="320" alt="web3-sidechain">
+
 
 关于更多的以太坊扩容，请参考：
 
@@ -94,4 +95,4 @@ One way to combat this is to use a decentralized off-chain storage solution, lik
 
 > We batch transactions off-chain using a “rollup” smart contract and then periodically commit these transactions to the main chain. 
 
-The take-home idea is this: L2 解决方式是在链下执行交易，只有交易的数据存储在链上，这使得我们可以扩展链，因为我们不必在链上执行每一笔交易，也让交易变得更快和成本更便宜。必要时他们仍然可以与以太坊进行通信。
+The take-home idea is this: L2 解决方式是在链下执行交易，只有交易的数据存储在链上，这使得链更具有扩展性，我们不必在链上执行每一笔交易，这样做会使交易变得更快和成本更低，在必要的时候，它们仍然可以与主链进行通信。
