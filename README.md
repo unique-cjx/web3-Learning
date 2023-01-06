@@ -1,6 +1,6 @@
-# Web3-studay
+# Web3-Learning
 
-## What is web3
+## What is Web3
 > Web3 的核心是通过区块链、加密货币和非同质化代币将权力以所有权的形式归还用户
 1. web3是去中心化的
 2. web3无需许可
@@ -18,3 +18,5 @@
 ## Project structure
 - [blog](./blog/README.md) The project we'll be building is a full stack blog as well as a CMS
 - [zombie](./zombie/README.md) Solidity 相关的语法知识
+- [architecture](./architecture/README.md) The Architecture of a Web 3.0 application
+- [Uright](./uright/README.md) 音乐版权管理的DApp
