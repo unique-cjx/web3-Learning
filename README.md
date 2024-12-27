@@ -19,4 +19,4 @@
 - [blog](./blog/README.md) The project we'll be building is a full stack blog as well as a CMS
 - [zombie](./zombie/README.md) Solidity 相关的语法知识
 - [architecture](./architecture/README.md) The Architecture of a Web 3.0 application
-- [Uright](./uright/README.md) 音乐版权管理的DApp
+- [Lottery](./uright/README.md) Hardhat Smart Contract Lottery
