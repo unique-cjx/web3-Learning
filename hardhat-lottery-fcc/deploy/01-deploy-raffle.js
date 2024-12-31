@@ -48,19 +48,19 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         waitConfirmations: network.config.blockConfirmations || 1,
     })
 
-    // Add the Raffle contract as a consumer of the VRFCoordinator.
+    // Add the Raffle contract as a consumer of the VRFCoordinator if network is development.
     if (developmentChains.includes(network.name)) {
         await vrfCoordinatorMock.addConsumer(subId, raffle.address)
         const isAdded = await vrfCoordinatorMock.consumerIsAdded(subId, raffle.address)
         log(`Is RaffleContract add in VRFCoordinator Consumer: ${isAdded}`)
     }
 
-    log(`Raffle contract address: ${raffle.address}`)
+    console.log(`Raffle contract address: ${raffle.address}`)
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
         log("Raffle is verifying...")
         await verify(raffle.address, args)
     }
-    
+
     log("Raffle contract deployed!")
     log("----------------------------------------------------------")
 }

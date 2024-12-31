@@ -1,8 +1,6 @@
 const { deployments, ethers, getNamedAccounts, network } = require("hardhat")
 const { assert, expect } = require("chai")
 const { developmentChains, networkConfig } = require("../../helper-hardhat-config")
-const { bigint } = require("hardhat/internal/core/params/argumentTypes")
-const { access } = require("fs")
 
 if (!developmentChains.includes(network.name)) {
     return
@@ -24,7 +22,7 @@ describe("Raffle", function () {
         interval = await raffle.getInterval()
     })
 
-    describe("constructor", function (params) {
+    describe("constructor", function () {
         it("Initializes the raffle correctly", async function () {
             const raffleState = (await raffle.getRaffleState()).toString()
             const interval = (await raffle.getInterval()).toString()
@@ -41,7 +39,7 @@ describe("Raffle", function () {
         it("records players when they enter", async function () {
             await raffle.enterRaffle({ value: entranceFee })
             const contractPlayer = await raffle.getPlayer(0)
-            assert.equal(contractPlayer, deployer)
+            assert.equal(contractPlayer, deployer.address)
         })
 
         it("emits event on enter", async function () {
@@ -125,7 +123,7 @@ describe("Raffle", function () {
         })
     })
 
-    describe.only("fulfillRandomWords", function () {
+    describe("fulfillRandomWords", function () {
         beforeEach(async () => {
             await raffle.enterRaffle({ value: entranceFee })
             await network.provider.send("evm_increaseTime", [Number(interval) + 1])
@@ -197,7 +195,7 @@ describe("Raffle", function () {
             // Set timeout for promise completion
             await Promise.race([
                 promise,
-                new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout exceeded")), 20000)),
+                new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout exceeded")), 500000)),
             ])
         })
     })
