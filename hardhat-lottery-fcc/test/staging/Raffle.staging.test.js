@@ -13,8 +13,7 @@ describe("Raffle Staging", function () {
         accounts = await ethers.getSigners()
         deployer = accounts[0]
 
-        raffleContract = await ethers.getContract("Raffle")
-        raffle = raffleContract.connect(deployer)
+        raffle = await ethers.getContract("Raffle", deployer)
         entranceFee = await raffle.getEntranceFee()
     })
 
@@ -50,9 +49,12 @@ describe("Raffle Staging", function () {
                     })
 
                     // Perform Upkeep and wait for transaction to be mined
+                    startingBalance = await ethers.provider.getBalance(deployer.address)
+                    console.log("entering before Balance: ", startingBalance)
+
                     console.log("Entering Raffle fee...")
                     const txReceipt = await raffle.enterRaffle({ value: entranceFee })
-                    txReceipt.wait(1)
+                    await txReceipt.wait(1) // Wait for the transaction to be mined
                     console.log("Entrance fee paid...")
 
                     startingBalance = await ethers.provider.getBalance(deployer.address)
