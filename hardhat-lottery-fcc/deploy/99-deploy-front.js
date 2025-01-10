@@ -23,7 +23,7 @@ async function writeContractAddresses() {
 
     for (const key in contractAddresses) {
         if (key === chanId) {
-            console.log("raffle.address=", address)
+            console.log(`writing chainId: ${key}, address: ${address}`)
             contractAddresses[chanId] = address
         }
     }
