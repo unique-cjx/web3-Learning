@@ -1,8 +1,8 @@
 import Head from "next/head"
-import styles from "@/styles/Home.module.css"
 import { useMoralis } from "react-moralis"
 import { Typography } from "@web3uikit/core"
 
+import styles from "@/styles/Home.module.css"
 import Header from "@/components/Header"
 import LotteryEntrance from "@/components/LotteryEntrance"
 

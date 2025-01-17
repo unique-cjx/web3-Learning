@@ -2,7 +2,7 @@ import { useWeb3Contract, useMoralis } from "react-moralis"
 import { abi, contractAddresses } from "../constants"
 import { useEffect, useState } from "react"
 import { ethers } from "ethers"
-import { Typography, Button, useNotification } from "@web3uikit/core"
+import { useNotification } from "@web3uikit/core"
 
 export default function LotteryEntrance() {
     const { isWeb3Enabled, chainId: chainIdHex, provider } = useMoralis()
@@ -143,26 +143,52 @@ export default function LotteryEntrance() {
         <div>
             {raffleAddress ? (
                 <div>
-                    <Button
-                        onClick={async function () {
-                            await enterRaffle({
-                                onSuccess: handleNotification,
-                                onError: (err) => {
-                                    console.log("Detailed error object:", err)
-                                    popNotification(false)
-                                },
-                            })
-                        }}
-                        text="Enter Raffle"
-                        theme="primary"
-                    />
-                    <Typography variant="body16" style={{ color: "#D69700" }}>
-                        Entrance Fee: {ethers.utils.formatUnits(enFee)} ETH
-                    </Typography>
-                    <br />
-                    <Typography variant="Caption14">The current number of players is: {numberOfPlayers}</Typography>
-                    <br />
-                    <Typography variant="Caption14">The most previous winner was: {recentWinner}</Typography>
+                    <div class="ml-auto py-2 px-4">
+                        <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-auto transition duration-300"
+                            onClick={async function () {
+                                await enterRaffle({
+                                    onSuccess: handleNotification,
+                                    onError: (err) => {
+                                        console.log("Detailed error object:", err)
+                                        popNotification(false)
+                                    },
+                                })
+                            }}
+                            text="Enter Raffle"
+                            theme="primary"
+                            disabled={isLoading || isFetching}
+                        >
+                            {isLoading || isFetching ? (
+                                <div className="animate-spin spinner-border h-8 w-8 border-b-2 rounded-full"></div>
+                            ) : (
+                                "Enter Raffle"
+                            )}
+                        </button>
+                    </div>
+
+                    <div className="space-y-6 p-8 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg">
+                        <div className="text-xl font-bold text-gray-900">
+                            Entrance Fee:{" "}
+                            <span className="text-purple-700 bg-purple-100 px-2 py-1 rounded">
+                                {ethers.utils.formatUnits(enFee)} ETH
+                            </span>
+                        </div>
+
+                        <div className="text-xl font-semibold text-gray-800">
+                            Players:{" "}
+                            <span className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
+                                {numberOfPlayers}
+                            </span>
+                        </div>
+
+                        <div className="text-xl font-medium text-gray-800">
+                            Previous Winner: <br />
+                            <span className="text-blue-600 font-mono bg-blue-50 p-2 rounded block mt-1 overflow-auto">
+                                {recentWinner}
+                            </span>
+                        </div>
+                    </div>
                 </div>
             ) : (
                 <div>
