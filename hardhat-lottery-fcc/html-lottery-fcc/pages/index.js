@@ -1,6 +1,5 @@
 import Head from "next/head"
 import { useMoralis } from "react-moralis"
-import { Typography } from "@web3uikit/core"
 
 import styles from "@/styles/Home.module.css"
 import Header from "@/components/Header"
@@ -29,9 +28,9 @@ export default function Home() {
                     )}
                 </div>
             ) : (
-                <Typography variant="subtitle1" style={{ color: "#e31b1b" }}>
+                <h4 className="py-4 px-4 font-bold text-3xl text-slate-400 hover:text-red-600">
                     Please connect to a Wallet
-                </Typography>
+                </h4>
             )}
         </div>
     )
