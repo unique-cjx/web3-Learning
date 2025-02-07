@@ -87,7 +87,7 @@ export default function LotteryEntrance() {
             const listener = async (winner, event) => {
                 if (event.blockNumber <= currentBlock) {
                     console.log(
-                        `Skipping historical event from block. current block: ${currentBlock}, event block: ${event.blockNumber}`,
+                        `Skipping historical event from block. current block: ${currentBlock}, event block: ${event.blockNumber}`
                     )
                     return
                 }
