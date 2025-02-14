@@ -1,30 +1,16 @@
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.4.19;
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 interface IWeth {
-  function allowance(address owner, address spender) external view returns (uint256 remaining);
+    function deposit() external payable;
 
-  function approve(address spender, uint256 value) external returns (bool success);
+    function withdraw(uint) external;
 
-  function balanceOf(address owner) external view returns (uint256 balance);
+    function approve(address, uint) external returns (bool);
 
-  function decimals() external view returns (uint8 decimalPlaces);
+    function transfer(address, uint) external returns (bool);
 
-  function name() external view returns (string memory tokenName);
+    function transferFrom(address, address, uint) external returns (bool);
 
-  function symbol() external view returns (string memory tokenSymbol);
-
-  function totalSupply() external view returns (uint256 totalTokensIssued);
-
-  function transfer(address to, uint256 value) external returns (bool success);
-
-  function transferFrom(
-    address from,
-    address to,
-    uint256 value
-  ) external returns (bool success);
-
-  function deposit() external payable;
-
-  function withdraw(uint256 wad) external;
+    function balanceOf(address) external view returns (uint);
 }

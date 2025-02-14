@@ -181,7 +181,7 @@ interface ILendingPool {
   function deposit(
     address asset,
     uint256 amount,
-    address onBehalfOf,
+    address onBehalfOf, 
     uint16 referralCode
   ) external;
 
