@@ -14,23 +14,21 @@ npm install --global hardhat-shorthand
 hh run scripts/aaveBorrow.js
 ```
 
-or run on a test
-
-```
-hh run scripts/aaveBorrow.js --network sepolia
-```
-
 ### Forking from mainnet
 
 You need to configure Hardhat Network to always do this:
 
-```json
+```javascript
+// ...
 networks: {
   hardhat: {
-    chainId: 31337.
+    chainId: 31337,
     forking: {
       url: MAIN_RPC_URL,
     }
+  },
+  sepolia: {
+    // ...
   }
 }
 ```
@@ -52,11 +50,13 @@ Retrieving `DAI/ETH` latest price information.
 - Track reserve states
 
 ### IWeth
+
 > Interface for Wrapped Ether (WETH)
 
 Allows conversion between ETH and WETH. Deposit ETH to get WETH.
 
 ### IERC20
+
 > Standard interface for fungible tokens on Ethereum
 
 Approve WETH limits.
