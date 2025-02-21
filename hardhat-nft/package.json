@@ -1,0 +1,23 @@
+{
+    "name": "hardhat-nft",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "deploy": "hardhat deploy",
+        "release": "hardhat deploy --network sepolia",
+        "upload": "node scripts/uploadToken.js"
+    },
+    "devDependencies": {
+        "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+        "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.4.2",
+        "ethers": "^6.13.4",
+        "hardhat": "^2.22.17",
+        "pinata-web3": "^0.5.4",
+        "prettier": "^3.4.2",
+        "prettier-plugin-solidity": "^1.4.2"
+    },
+    "dependencies": {
+        "@openzeppelin/contracts": "^5.2.0",
+        "dotenv": "^16.4.7"
+    }
+}

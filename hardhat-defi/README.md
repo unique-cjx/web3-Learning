@@ -16,7 +16,7 @@ hh run scripts/aaveBorrow.js
 
 ### Forking from mainnet
 
-You need to configure Hardhat Network to always do this:
+You need to configure Network to always do this:
 
 ```javascript
 // ...
