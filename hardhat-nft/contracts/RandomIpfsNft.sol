@@ -36,6 +36,10 @@ contract RandomIpfsNft is ERC721URIStorage, VRFConsumerBaseV2Plus {
         ST_BERNARD
     }
 
+    /* Events */
+    event NftRequested(uint256 indexed requestId, address indexed requester);
+    event NftMinted(Breed dogeBreed, address minter);
+
     constructor(
         address vrfCoordinator,
         uint256 subscriptionId,
@@ -67,6 +71,7 @@ contract RandomIpfsNft is ERC721URIStorage, VRFConsumerBaseV2Plus {
             })
         );
         s_requestIdToSender[requestId] = msg.sender;
+        emit NftRequested(requestId, msg.sender);
     }
 
     function fulfillRandomWords(uint256 requestId, uint256[] calldata randomWords) internal override {
@@ -79,8 +84,10 @@ contract RandomIpfsNft is ERC721URIStorage, VRFConsumerBaseV2Plus {
         // 88 -> St. Bernard
         // 45 -> St. Bernard
         Breed dogBreed = getBreedFromModdedRng(moddedRing);
+        s_tokenCounter += s_tokenCounter;
         _safeMint(dogOwner, newTokenId);
         _setTokenURI(newTokenId, s_dogeTokenUrls[uint256(dogBreed)]);
+        emit NftMinted(dogBreed, dogOwner);
     }
 
     function getBreedFromModdedRng(uint256 moddedRng) public pure returns (Breed) {
@@ -114,5 +121,18 @@ contract RandomIpfsNft is ERC721URIStorage, VRFConsumerBaseV2Plus {
             revert RandomIpfsNft__TransferFailed();
         }
     }
+
+    function getMintFee() public view returns (uint256) {
+        return i_mintFee;
+    }
+
+    function getDogTokenUrl(uint256 index) public view returns (string memory) {
+        return s_dogeTokenUrls[index];
+    }
+
+    function getTokenCounter() public view returns (uint256) {
+        return s_tokenCounter;
+    }
+
     function tokenURI(uint256) public view override returns (string memory) {}
 }
