@@ -29,8 +29,6 @@ contract RandomIpfsNft is ERC721URIStorage, VRFConsumerBaseV2Plus {
     uint256 internal constant MAX_CHANCE_VALUE = 100;
     string[] internal s_dogeTokenUrls;
 
-    // mapping(uint256 => string) public s_tokenUrls; // Cannot normally use _tokenURIs of ERC721URIStorage
-
     // Doge Type Description
     enum Breed {
         PUG,
@@ -88,8 +86,7 @@ contract RandomIpfsNft is ERC721URIStorage, VRFConsumerBaseV2Plus {
         Breed dogBreed = getBreedFromModdedRng(moddedRing);
         s_tokenCounter = tokenId + 1;
         _safeMint(tokenOwner, tokenId);
-
-        // _setTokenURI(tokenId, s_dogeTokenUrls[uint256(dogBreed)]);
+        _setTokenURI(tokenId, s_dogeTokenUrls[uint256(dogBreed)]);
 
         emit NftMinted(tokenId, dogBreed, tokenOwner);
     }

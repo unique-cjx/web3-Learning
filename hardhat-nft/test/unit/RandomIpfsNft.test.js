@@ -47,17 +47,17 @@ describe("Random IPFS NFT Tests", function () {
         it("mints NFT after random number is returned", async function () {
             console.log("Setting up Listener...")
 
-            const promise = await new Promise(async (resolve, reject) => {
+            await new Promise(async (resolve, reject) => {
                 try {
                     randomIpfsNft.once("NftMinted", async (tokenId, breed, minter) => {
                         console.log("NftMinted event fired!")
                         try {
                             console.log(`tokenId: ${tokenId}, breed: ${breed}, minter: ${minter}`)
-                            // const tokenUrl = await randomIpfsNft.getTokenUrl(tokenId.toString())
-                            // const dogUrl = await randomIpfsNft.getDogTokenUrl(breed.toString())
+                            const tokenUrl = await randomIpfsNft.tokenURI(tokenId.toString())
+                            const dogUrl = await randomIpfsNft.getDogTokenUrl(breed.toString())
                             const tokenCounter = await randomIpfsNft.getTokenCounter()
 
-                            // assert.equal(dogUrl.toString(), tokenUrl.toString())
+                            assert.equal(dogUrl.toString(), tokenUrl.toString())
                             assert.equal(tokenCounter.toString(), (tokenId + BigInt(1)).toString())
                             assert.equal(minter, deployer.address)
                             resolve()
@@ -81,12 +81,6 @@ describe("Random IPFS NFT Tests", function () {
                     reject(e)
                 }
             })
-
-            // Set timeout for promise completion
-            await Promise.race([
-                promise,
-                new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout exceeded")), 500000)), // 500 seconds
-            ])
         })
     })
 })

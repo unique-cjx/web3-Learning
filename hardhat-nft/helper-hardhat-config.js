@@ -5,7 +5,7 @@ const networkConfig = {
         name: "localhost",
         mintFee: ethers.parseEther("0.5"),
         gasLane: "0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae",
-        callbackGasLimit: "100000",
+        callbackGasLimit: "1000000",
         linkTokenAddress: "0x779877A7B0D9E8603169DdbD7836e478b4624789",
     },
     // Price Feed Address, values can be obtained at https://docs.chain.link/data-feeds/price-feeds/addresses
@@ -13,7 +13,7 @@ const networkConfig = {
         name: "sepolia",
         mintFee: ethers.parseEther("0.01"),
         gasLane: "0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae",
-        callbackGasLimit: "500000",
+        callbackGasLimit: "1000000",
         vrfCoordinator: "",
         subscriptionId: "",
     },
