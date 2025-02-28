@@ -1,14 +1,10 @@
 const { network, ethers } = require("hardhat")
-const { developmentChains, networkConfig } = require("../helper-hardhat-config")
+const { developmentChains, networkConfig, randomTokenUrls } = require("../helper-hardhat-config")
 const { verify } = require("../utils/verify")
 const { storeImages, storeMetadataJson } = require("../utils/pinata")
 
 const VRF_SUB_FUND_AMOUNT = ethers.parseEther("100")
-let tokenUrls = [
-    "bafkreiaclwpdgzfirul4w2piw6ru7rlnzz4upsh25pvcxpo75tqlnzurra",
-    "bafkreif635u25fe24xssjslmavzgtqzbyrxppvygltocpmwylls3j5jlnq",
-    "bafkreidzg3rbrlcvn4u5mbya4iij7soy3oblloa7yugco2tfqzsp62amuq",
-]
+const tokenUrls = []
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deploy, log } = deployments
@@ -37,9 +33,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         subId = helperConf["subscriptionId"]
     }
 
-    if (tokenUrls.length < 1) {
-        tokenUrls = await handleTokenUrls()
-    }
+    await handleTokenUrls()
 
     const args = [
         vrfCoordinatorAddress,
@@ -90,7 +84,13 @@ const metadataTemplate = {
 }
 
 async function handleTokenUrls() {
-    const uploadedTokens = []
+    if (randomTokenUrls.length === 3) {
+        for (const url of randomTokenUrls) {
+            tokenUrls.push(url)
+        }
+        return
+    }
+
     const { responses, files } = await storeImages(imagesLocation)
     for (const index in responses) {
         let tokenMetadata = { ...metadataTemplate }
@@ -100,10 +100,9 @@ async function handleTokenUrls() {
 
         console.log(`Uploading ${tokenMetadata.name}...`)
         const uploadedMetadata = await storeMetadataJson(tokenMetadata)
-        uploadedTokens.push(`${uploadedMetadata.IpfsHash}`)
+        tokenUrls.push(`https://ipfs.io/ipfs/${uploadedMetadata.IpfsHash}`)
     }
-    console.log("Token URIs uploaded! They are: \n", uploadedTokens)
-    return uploadedTokens
+    console.log("Token URIs uploaded! They are: \n", tokenUrls)
 }
 
 module.exports.tags = ["all", "random-nft"]

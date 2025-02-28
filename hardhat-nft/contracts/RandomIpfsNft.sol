@@ -29,6 +29,8 @@ contract RandomIpfsNft is ERC721URIStorage, VRFConsumerBaseV2Plus {
     uint256 internal constant MAX_CHANCE_VALUE = 100;
     string[] internal s_dogeTokenUrls;
 
+    // mapping(uint256 => string) public s_tokenUrls; // Cannot normally use _tokenURIs of ERC721URIStorage
+
     // Doge Type Description
     enum Breed {
         PUG,
@@ -38,7 +40,7 @@ contract RandomIpfsNft is ERC721URIStorage, VRFConsumerBaseV2Plus {
 
     /* Events */
     event NftRequested(uint256 indexed requestId, address indexed requester);
-    event NftMinted(Breed dogeBreed, address minter);
+    event NftMinted(uint256 indexed tokenId, Breed dogeBreed, address minter);
 
     constructor(
         address vrfCoordinator,
@@ -75,8 +77,8 @@ contract RandomIpfsNft is ERC721URIStorage, VRFConsumerBaseV2Plus {
     }
 
     function fulfillRandomWords(uint256 requestId, uint256[] calldata randomWords) internal override {
-        address dogOwner = s_requestIdToSender[requestId];
-        uint256 newTokenId = s_tokenCounter;
+        address tokenOwner = s_requestIdToSender[requestId];
+        uint256 tokenId = s_tokenCounter;
         uint256 moddedRing = randomWords[0] % MAX_CHANCE_VALUE;
         // 0-99
         // 7 -> PUG
@@ -84,10 +86,12 @@ contract RandomIpfsNft is ERC721URIStorage, VRFConsumerBaseV2Plus {
         // 88 -> St. Bernard
         // 45 -> St. Bernard
         Breed dogBreed = getBreedFromModdedRng(moddedRing);
-        s_tokenCounter += s_tokenCounter;
-        _safeMint(dogOwner, newTokenId);
-        _setTokenURI(newTokenId, s_dogeTokenUrls[uint256(dogBreed)]);
-        emit NftMinted(dogBreed, dogOwner);
+        s_tokenCounter = tokenId + 1;
+        _safeMint(tokenOwner, tokenId);
+
+        // _setTokenURI(tokenId, s_dogeTokenUrls[uint256(dogBreed)]);
+
+        emit NftMinted(tokenId, dogBreed, tokenOwner);
     }
 
     function getBreedFromModdedRng(uint256 moddedRng) public pure returns (Breed) {
@@ -133,6 +137,4 @@ contract RandomIpfsNft is ERC721URIStorage, VRFConsumerBaseV2Plus {
     function getTokenCounter() public view returns (uint256) {
         return s_tokenCounter;
     }
-
-    function tokenURI(uint256) public view override returns (string memory) {}
 }

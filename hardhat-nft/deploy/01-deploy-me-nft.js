@@ -1,5 +1,5 @@
 const { network } = require("hardhat")
-const { developmentChains, testTokenURL } = require("../helper-hardhat-config")
+const { developmentChains, meTokenUrl } = require("../helper-hardhat-config")
 const { verify } = require("../utils/verify")
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
@@ -7,7 +7,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deployer } = await getNamedAccounts()
 
     log("deploying the ME NFT contract...")
-    const arguments = [testTokenURL, "Allen", "ME"]
+    const arguments = [meTokenUrl, "Allen", "ME"]
     
     const basicNft = await deploy("MeNFT", {
         from: deployer,
@@ -23,4 +23,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     }
 }
 
-module.exports.tags = ["all", "menft", "main"]
+module.exports.tags = ["all", "me-nft", "main"]

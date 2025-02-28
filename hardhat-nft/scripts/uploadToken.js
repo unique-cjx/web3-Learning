@@ -1,8 +1,8 @@
-const { testTokenURL } = require("../helper-hardhat-config")
+const { meTokenUrl } = require("../helper-hardhat-config")
 const { uploadMeToken } = require("../utils/pinata")
 
 async function main() {
-    if (testTokenURL.length > 0) {
+    if (meTokenUrl.length > 0) {
         console.warn("Token has already existed!!!")
         return
     }
