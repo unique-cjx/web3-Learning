@@ -11,7 +11,7 @@ describe("Random IPFS NFT Tests", function () {
     let randomIpfsNftContract, randomIpfsNft, vrfCoordinatorV2_5Mock, deployer, mintFee
     const chainId = network.config.chainId
 
-    beforeEach(async () => {
+    beforeEach(async function () {
         accounts = await ethers.getSigners()
         deployer = accounts[0]
         await deployments.fixture(["mocks", "random-nft"])
@@ -43,7 +43,7 @@ describe("Random IPFS NFT Tests", function () {
         })
     })
 
-    describe.only("fulfillRandomWords", function () {
+    describe("fulfillRandomWords", function () {
         it("mints NFT after random number is returned", async function () {
             console.log("Setting up Listener...")
 
@@ -81,6 +81,27 @@ describe("Random IPFS NFT Tests", function () {
                     reject(e)
                 }
             })
+        })
+    })
+
+    describe.only("getBreedFromModdedRng", function () {
+        it("should return pug if moddedRng < 10", async function () {
+            const expectedValue = await randomIpfsNft.getBreedFromModdedRng(7)
+            assert.equal(0, expectedValue)
+        })
+        it("should return shiba-inu if moddedRng is between 10 and 39", async function () {
+            const expectedValue = await randomIpfsNft.getBreedFromModdedRng(10)
+            assert.equal(1, expectedValue)
+        })
+        it("should return st. bernard if moddedRng is between 40 and 139", async function () {
+            const expectedValue = await randomIpfsNft.getBreedFromModdedRng(100)
+            assert.equal(2, expectedValue)
+        })
+        it("should revert if moddedRng > 140", async function () {
+            await expect(randomIpfsNft.getBreedFromModdedRng(140)).to.be.revertedWithCustomError(
+                randomIpfsNft,
+                "RandomIpfsNft__RangeOutOfBreeds",
+            )
         })
     })
 })

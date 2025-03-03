@@ -56,7 +56,7 @@ describe("Raffle", function () {
             await expect(raffle.enterRaffle({ value: entranceFee })).to.be.revertedWithCustomError(
                 raffle,
                 // is reverted as raffle is calculating
-                "Raffle__RaffleNotOpen"
+                "Raffle__RaffleNotOpen",
             )
         })
     })
@@ -106,7 +106,7 @@ describe("Raffle", function () {
             await expect(raffle.performUpkeep("0x")).to.be.revertedWithCustomError(
                 raffle,
                 // is reverted as raffle is calculating
-                "Raffle__UpkeepNotNeeded"
+                "Raffle__UpkeepNotNeeded",
             )
         })
         it("updates the raffle state and emits a requestId", async () => {
@@ -132,10 +132,10 @@ describe("Raffle", function () {
 
         it("can only be called after performupkeep", async () => {
             await expect(
-                vrfCoordinatorV2_5Mock.fulfillRandomWords(0, raffle.target) // reverts if not fulfilled
+                vrfCoordinatorV2_5Mock.fulfillRandomWords(0, raffle.target), // reverts if not fulfilled
             ).to.be.revertedWithCustomError(vrfCoordinatorV2_5Mock, "InvalidRequest")
             await expect(
-                vrfCoordinatorV2_5Mock.fulfillRandomWords(1, raffle.target) // reverts if not fulfilled
+                vrfCoordinatorV2_5Mock.fulfillRandomWords(1, raffle.target), // reverts if not fulfilled
             ).to.be.revertedWithCustomError(vrfCoordinatorV2_5Mock, "InvalidRequest")
         })
 
@@ -156,7 +156,7 @@ describe("Raffle", function () {
             // FulfillRandomWords (mock being the Chainlink VRF).
             // We'll have to wait for the FulfillRandomWords method to be called.
             console.log("Setting up Listener...")
-            const promise = await new Promise(async (resolve, reject) => {
+            await new Promise(async (resolve, reject) => {
                 try {
                     raffle.once("WinnerPicked", async () => {
                         console.log("WinnerPicked event fired!")
@@ -173,11 +173,12 @@ describe("Raffle", function () {
                             assert.equal(raffleState, 0) // 0 = open, 1 = calculating
                             assert.equal(
                                 winnerBalance,
-                                startingBalance + entranceFee * BigInt(additionalEntrances) + entranceFee
+                                startingBalance + entranceFee * BigInt(additionalEntrances) + entranceFee,
                             )
                             assert(endingTimeStamp > startingTimestamp)
                             resolve()
                         } catch (e) {
+                            console.error("WinnerPicked event Error: ", e)
                             reject(e)
                         }
                     })
@@ -188,15 +189,10 @@ describe("Raffle", function () {
                     startingBalance = await ethers.provider.getBalance(accounts[1].address) // get the starting balance
                     await vrfCoordinatorV2_5Mock.fulfillRandomWords(txReceipt.logs[1].args.requestId, raffle.target)
                 } catch (e) {
+                    console.error("fulfillRandomWords Error: ", e)
                     reject(e)
                 }
             })
-
-            // Set timeout for promise completion
-            await Promise.race([
-                promise,
-                new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout exceeded")), 500000)),
-            ])
         })
     })
 })
