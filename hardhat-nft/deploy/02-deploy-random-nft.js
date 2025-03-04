@@ -16,7 +16,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     const helperConf = networkConfig[chainId]
 
     if (developmentChains.includes(network.name)) {
-        log("Local network detected! Deploying mocks...")
+        log("Local network detected! Deploying the VRFCoordinator mock...")
         vrfCoordinatorMock = await ethers.getContract("VRFCoordinatorV2_5Mock")
         vrfCoordinatorAddress = vrfCoordinatorMock.target
         const transactionResp = await vrfCoordinatorMock.createSubscription()
@@ -51,7 +51,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         waitConfirmations: network.config.blockConfirmations || 1,
     })
     const address = randomIpfsNft.address
-    console.log(`randomNft contract address: ${address}`)
+    console.log(`RandomIpfsNft contract address: ${address}`)
 
     // Add the contract as a consumer of the VRFCoordinator if network is development.
     if (developmentChains.includes(network.name)) {
@@ -61,11 +61,11 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     }
 
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
-        log("Raffle is verifying...")
+        log("RandomIpfsNft contract is being verified...")
         await verify(address, args)
     }
 
-    log("randomIpfsNft contract deployed!")
+    log("RandomIpfsNft contract deployed!")
     log("----------------------------------------------------------")
 }
 
