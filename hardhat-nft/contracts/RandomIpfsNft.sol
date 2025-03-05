@@ -66,7 +66,7 @@ contract RandomIpfsNft is ERC721URIStorage, VRFConsumerBaseV2Plus {
                 requestConfirmations: REQUEST_CONFIRMATIONS,
                 callbackGasLimit: i_callbackGasLimit,
                 numWords: NUM_WORDS,
-                // Set nativePayment to true to pay for VRF requests with Sepolia ETH instead of LINK
+                // Set "nativePayment" to true to pay for VRF requests with ETH instead of LINK
                 extraArgs: VRFV2PlusClient._argsToBytes(VRFV2PlusClient.ExtraArgsV1({nativePayment: false}))
             })
         );

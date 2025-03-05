@@ -17,7 +17,7 @@ describe("MeNFT Unit Tests", function () {
         meNft = await ethers.getContract("MeNFT")
     })
 
-    describe.only("Constructor", () => {
+    describe("Constructor", () => {
         it("Initializes the NFT Correctly.", async () => {
             const name = await meNft.name()
             const symbol = await meNft.symbol()

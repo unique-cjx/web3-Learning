@@ -105,4 +105,4 @@ async function handleTokenUrls() {
     console.log("Token URIs uploaded! They are: \n", tokenUrls)
 }
 
-module.exports.tags = ["all", "random-nft"]
+module.exports.tags = ["all", "random-nft", "main"]

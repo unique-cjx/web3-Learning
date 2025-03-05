@@ -17,7 +17,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     }
 
     log("----------------------------------------------------------")
-    log("Local network detected! Deploying mocks...")
+    log("Local network detected! Deploying mocks...")   
     await deploy("VRFCoordinatorV2_5Mock", {
         from: deployer,
         log: true,
@@ -36,4 +36,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     log("----------------------------------------------------------")
 }
 
-module.exports.tags = ["all", "mocks"]
+module.exports.tags = ["all", "mocks", "main"]

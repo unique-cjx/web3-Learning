@@ -8,14 +8,13 @@ if (!developmentChains.includes(network.name)) {
 }
 
 describe("Random IPFS NFT Tests", function () {
-    let randomIpfsNftContract, randomIpfsNft, vrfCoordinatorV2_5Mock, deployer, mintFee
-    const chainId = network.config.chainId
+    let randomIpfsNft, vrfCoordinatorV2_5Mock, deployer, mintFee
 
     beforeEach(async function () {
         accounts = await ethers.getSigners()
         deployer = accounts[0]
         await deployments.fixture(["mocks", "random-nft"])
-        randomIpfsNftContract = await ethers.getContract("RandomIpfsNft")
+        const randomIpfsNftContract = await ethers.getContract("RandomIpfsNft")
         randomIpfsNft = randomIpfsNftContract.connect(deployer)
         vrfCoordinatorV2_5Mock = await ethers.getContract("VRFCoordinatorV2_5Mock")
 
@@ -84,7 +83,7 @@ describe("Random IPFS NFT Tests", function () {
         })
     })
 
-    describe.only("getBreedFromModdedRng", function () {
+    describe("getBreedFromModdedRng", function () {
         it("should return pug if moddedRng < 10", async function () {
             const expectedValue = await randomIpfsNft.getBreedFromModdedRng(7)
             assert.equal(0, expectedValue)

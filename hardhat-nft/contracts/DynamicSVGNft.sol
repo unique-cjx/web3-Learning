@@ -60,7 +60,7 @@ contract DynamicSvgNft is ERC721 {
         }
         (, int256 price, , , ) = i_priceFeed.latestRoundData();
         string memory imageURI = s_lowImageURI;
-        if (price >= s_tokenIdToHighValues[tokenId]) {
+        if (price <= s_tokenIdToHighValues[tokenId]) {
             imageURI = s_highImageURI;
         }
         return
@@ -73,7 +73,7 @@ contract DynamicSvgNft is ERC721 {
                                 '{"name":"',
                                 name(), // You can add whatever name here
                                 '", "description":"An NFT that changes based on the Chainlink Feed", ',
-                                '"attributes": [{"trait_type": "coolness", "value": 100}], "image":"',
+                                '"attributes":[{"trait_type":"coolness", "value":100}], "image":"',
                                 imageURI,
                                 '"}'
                             )
