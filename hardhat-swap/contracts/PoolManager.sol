@@ -62,6 +62,7 @@ contract PoolManager is Factory, IPoolManager {
 
         // 新创建的池子，没有初始化价格，需要初始化价格
         if (pool.sqrtPriceX96() == 0) {
+            // This is the first time to initialize the pool, we need to initialize the price
             pool.initialize(params.sqrtPriceX96);
 
             if (index == 1) {
